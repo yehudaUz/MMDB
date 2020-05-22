@@ -5,7 +5,8 @@ import '../styles/style.css'
 // import NoteList from './NoteList'
 // import AddNoteForm from './AddNoteForm'
 import NotesContext from '../context/notes-context'
-
+import { firebase } from '../fireBase/fireBase';
+import { startLogin } from '../fireBase/auth'
 // const NoteApp = () => {
 //     //const [notes, setNotes] = useState([])
 //     const [notes, dispacth] = useReducer(notesReducer, [])
@@ -38,6 +39,8 @@ import NotesContext from '../context/notes-context'
 //     )
 // }
 
+startLogin()
+
 const App = () => {
     return (
         <NotesContext.Provider /*value={{ notes, dispacth, removeNote }}*/>
@@ -48,5 +51,13 @@ const App = () => {
         </NotesContext.Provider >
     )
 }
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user)
+        console.log("logged in")
+    else
+        console.log("log out")
+})
+
 
 export default App

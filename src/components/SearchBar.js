@@ -6,37 +6,37 @@ import NotesContext from '../context/notes-context'
 
 const SearchBar = () => {
     return (
-        <section class="search-banner bg-danger text-white py-5" id="search-banner">
-            <div class="container py-5 my-5">
-                <div class="row text-center pb-4">
-                    <div class="col-md-12">
+        <section className="search-banner bg-danger text-white py-5" id="search-banner">
+            <div className="container py-5 my-5">
+                <div className="row text-center pb-4">
+                    <div className="col-md-12">
                         <h2>Find and rate the movies YOU like!</h2>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group ">
-                                            <input class="form-control" placeholder="Search by name"></input>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-2">
+                                        <div className="form-group ">
+                                            <input className="form-control" placeholder="Search by name"></input>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group ">
-                                            <select id="inputState" class="form-control" >
-                                                <option selected>Bigger/Smaller then</option>
+                                    <div className="col-md-2">
+                                        <div className="form-group ">
+                                            <select id="inputState" className="form-control" >
+                                                <option defaultValue>Bigger/Smaller then</option>
                                                 <option>Bigger then ( >= )</option>
                                                 <option>Smaller then ( >= )</option>
                                             </select>
-                                            <input class="form-control" placeholder="Search by rating"></input>
+                                            <input className="form-control" placeholder="Search by rating"></input>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group ">
-                                            <select id="inputState" class="form-control" >
-                                                <option selected>Pick Genere</option>
+                                    <div className="col-md-2">
+                                        <div className="form-group ">
+                                            <select id="inputState" className="form-control" >
+                                                <option defaultValue>Pick Genere</option>
                                                 <option>Action</option>
                                                 <option>Adventure</option>
                                                 <option>Comedy</option>
@@ -49,23 +49,23 @@ const SearchBar = () => {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group ">
-                                            <input class="form-control" placeholder="Search By Year"></input>
+                                    <div className="col-md-2">
+                                        <div className="form-group ">
+                                            <input className="form-control" placeholder="Search By Year"></input>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group ">
-                                        <select id="inputState" class="form-control" >
-                                                <option selected>Bigger/Smaller</option>
+                                    <div className="col-md-2">
+                                        <div className="form-group ">
+                                        <select id="inputState" className="form-control" >
+                                                <option defaultValue>Bigger/Smaller</option>
                                                 <option>Greater then ( >= )</option>
                                                 <option>Smaller then ( >= )</option>
                                             </select>
-                                            <input class="form-control" placeholder="How many raters?"></input>
+                                            <input className="form-control" placeholder="How many raters?"></input>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-dark">SEARCH</button>
+                                    <div className="col-md-2">
+                                        <button type="button" className="btn btn-dark">SEARCH</button>
                                     </div>
                                 </div>
                             </div>
