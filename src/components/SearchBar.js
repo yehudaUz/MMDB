@@ -6,7 +6,7 @@ import NotesContext from '../context/notes-context'
 
 const SearchBar = () => {
     return (
-        <section className="search-banner bg-danger text-white py-5" id="search-banner">
+        <section className="search-banner text-white py-5 searchBar" id="search-banner">
             <div className="container py-5 my-5">
                 <div className="row text-center pb-4">
                     <div className="col-md-12">

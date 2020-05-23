@@ -1,4 +1,4 @@
-import { firebase, googleAuthProvider } from '../fireBase/fireBase'
+import { firebase, googleAuthProvider } from './fireBase'
 
 export const startLogin = () => {
     return () => {

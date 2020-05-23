@@ -15,8 +15,20 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 
-export { googleAuthProvider, firebase, database as default };
+export { googleAuthProvider, firebase, database  };
 
+
+
+console.log("ASdfasdfasdfasdfsa")
+
+
+
+// database.ref('asf').push({
+//     description: 'Rent',
+//     note: '',
+//     amount: 109500,
+//     createdAt: 976123498763
+// });
 // // child_removed
 // database.ref('expenses').on('child_removed', (snapshot) => {
 //   console.log(snapshot.key, snapshot.val());

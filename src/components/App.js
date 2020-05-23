@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useReducer } from 'react'
 import SearchBar from './SearchBar'
+import NavigationBar from './NavigationBar'
 import '../styles/style.css'
 // import notesReducer from '../reducers/notes'
 // import NoteList from './NoteList'
 // import AddNoteForm from './AddNoteForm'
 import NotesContext from '../context/notes-context'
-import { firebase } from '../fireBase/fireBase';
-import { startLogin } from '../fireBase/auth'
+import { firebase } from '../database/fireBase/fireBase'
+import { startLogin } from '../database/fireBase/auth'
 // const NoteApp = () => {
 //     //const [notes, setNotes] = useState([])
 //     const [notes, dispacth] = useReducer(notesReducer, [])
@@ -44,7 +45,8 @@ startLogin()
 const App = () => {
     return (
         <NotesContext.Provider /*value={{ notes, dispacth, removeNote }}*/>
-            <h1>Welcome to MMDB!!!</h1>
+            {/* <h1>Welcome to MMDB!!!</h1> */}
+            <NavigationBar />
             <SearchBar />
             {/* <NoteList />
             <AddNoteForm /> */}
@@ -52,12 +54,12 @@ const App = () => {
     )
 }
 
-firebase.auth().onAuthStateChanged((user) => {
-    if (user)
-        console.log("logged in")
-    else
-        console.log("log out")
-})
+// firebase.auth().onAuthStateChanged((user) => {
+//     if (user)
+//         console.log("logged in")
+//     else
+//         console.log("log out")
+// })
 
 
 export default App
