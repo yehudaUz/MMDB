@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App'
 import firebase from 'firebase'
 
-import parser from './database/filesParser/imdbParser'
+// import parser from './database/filesParser/imdbParser'
 
 
 ReactDOM.render(<App />, document.getElementById('app'));

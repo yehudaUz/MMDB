@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useReducer } from 'react'
 // import notesReducer from '../reducers/notes'
-// import NoteList from './NoteList'
-// import AddNoteForm from './AddNoteForm'
-import NotesContext from '../context/notes-context'
+import userLoginContext from '../context/userLoginContext'
 
 const SearchBar = () => {
     return (
@@ -56,7 +54,7 @@ const SearchBar = () => {
                                     </div>
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                        <select id="inputState" className="form-control" >
+                                            <select id="inputState" className="form-control" >
                                                 <option defaultValue>Bigger/Smaller</option>
                                                 <option>Greater then ( >= )</option>
                                                 <option>Smaller then ( >= )</option>

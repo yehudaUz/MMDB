@@ -15,11 +15,24 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 
-export { googleAuthProvider, firebase, database  };
+export { googleAuthProvider, firebase, database };
+
+// database.ref('MMDB').once('value').then((snapshot) => {
+//     const expenses = [];
+
+//     snapshot.forEach((childSnapshot) => {
+//         expenses.push({ id: childSnapshot.key, ...childSnapshot.val() });
+//     });
+//     console.log(expenses)
+// })
+
+// var ref = database.ref("MMDB");
+// ref.orderByChild("name").equalTo("Carmencita").on("child_added", function(snapshot) {
+//   console.log(snapshot.val());
+// });
 
 
-
-console.log("ASdfasdfasdfasdfsa")
+//Carmencita
 
 
 
