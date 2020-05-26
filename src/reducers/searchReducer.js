@@ -3,8 +3,21 @@ const search = (searchParams) => {
     return { ...searchParams }
 }
 
+const initialState = {
+    name: undefined,
+    ratingFilter: undefined,
+    rating: undefined,
+    genere: undefined,
+    year: undefined,
+    noOfRatersFilter: undefined,
+    noOfRaters: undefined
+}
+
+
 const searchReducer = (state, action) => {
     switch (action.type) {
+        case 'SET_STARTING_STATE':
+            return [initialState]
         case 'SEARCH':
             return search(action.searchParams)
         default:
@@ -24,4 +37,4 @@ const searchReducer = (state, action) => {
     // }
 }
 
-export default searchReducer
+export { searchReducer,initialState}

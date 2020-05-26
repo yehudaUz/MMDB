@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // import App from './App';
 // import * as serviceWorker from './serviceWorker';
 import App from './components/App'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 // import parser from './database/filesParser/imdbParser'
 

@@ -2,32 +2,35 @@ import React, { useEffect, useState, useReducer } from 'react'
 import SearchBar from './SearchBar'
 import NavigationBar from './NavigationBar'
 import '../styles/style.css'
-import userLoginContext from '../context/userLoginContext'
-import { startLogin } from '../database/fireBase/auth'
 import { BrowserRouter } from "react-router-dom";
-// import { firebase } from '../database/fireBase/fireBase'
 import SearchResult from './SearchResult'
-import searchReducer from '../reducers/searchReducer'
-
+import { searchReducer } from '../reducers/searchReducer'
+import searchContext from '../context/searchResultContext'
+// // import { firebase } from '../database/fireBase/fireBase'
+// import  searchResultsState  from '../actions/searchAction'
+// import userLoginContext from '../context/userLoginContext'
+// import { startLogin } from '../database/fireBase/auth'
 // startLogin()
 
 const App = () => {
-    const [searchResults, setSearch] = useState([])
-    const [search, dispacth] = useReducer(searchReducer, [])
+    // const [searchResultsState, setSearchState] = useState([])
+    const [search, dispatch] = useReducer(searchReducer, [])
+    useEffect(() => {
+        dispatch({ type: 'SET_STARTING_STATE', search })
+    }, [])
 
-    // const removeNote = (title) => {
-    //     // setNotes(notes.filter((note) => note.title !== title))
-    //     const action = { title, notes }
-    //     dispacth({ type: 'REMOVE_NOTE', ...action })
-    // }
+    // useEffect(() => {
+    //     localStorage.setItem('notes', JSON.stringify(notes))
+    // }, [search])
+
     return (
         <BrowserRouter>
-            <userLoginContext.Provider value={{ search, dispacth, searchReducer }}>
+            <searchContext.Provider value={{ search }}>
                 {/* <h1>Welcome to MMDB!!!</h1> */}
                 <NavigationBar />
                 <SearchBar />
                 <SearchResult />
-            </userLoginContext.Provider >
+            </searchContext.Provider >
         </BrowserRouter>
     )
 }

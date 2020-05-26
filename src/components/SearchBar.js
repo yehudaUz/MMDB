@@ -1,8 +1,36 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import React from 'react'//, { useEffect, useState, useReducer, useContext } from 'react'
 // import notesReducer from '../reducers/notes'
-import userLoginContext from '../context/userLoginContext'
+// import userLoginContext from '../context/userLoginContext'
+// import searchResultContext from '../context/searchResultContext'
+import '../reducers/searchReducer'
+// import searchResultContext from '../context/searchResultContext'
+
+const searchParams = {
+    name: undefined,
+    ratingFilter: undefined,
+    rating: undefined,
+    genere: undefined,
+    year: undefined,
+    noOfRatersFilter: undefined,
+    noOfRaters: undefined
+}
+
+const setNoOfRatersFilter = (e) => { searchParams.noOfRatersFilter = e.target.value };
+const setGenere = (e) => { searchParams.genere = e.target.value };
+const setRatingfilter = (e) => { searchParams.ratingFilter = e.target.value };
+const sendSearch = () => { console.log(searchParams) }
+const nameSearchChange = (e) => { searchParams.name = e.target.value }
+const ratingSearchChange = (e) => { searchParams.rating = e.target.value }
+const yearSearchChange = (e) => { searchParams.year = e.target.value }
+const noOfRatersSearchChange = (e) => { searchParams.noOfRaters = e.target.value }
+
+
 
 const SearchBar = () => {
+    // console.log(searchResultContext)
+    // const searchResult = useContext(searchResultContext)
+    // console.log("ZZZZ",searchResult.search)
+
     return (
         <section className="search-banner text-white py-5 searchBar" id="search-banner">
             <div className="container py-5 my-5">
@@ -18,22 +46,24 @@ const SearchBar = () => {
                                 <div className="row">
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                            <input className="form-control" placeholder="Search by name"></input>
+                                            <input className="form-control" placeholder="Search by name"
+                                                onChange={nameSearchChange}></input>
                                         </div>
                                     </div>
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                            <select id="inputState" className="form-control" >
+                                            <select id="inputState" className="form-control" onChange={setRatingfilter} >
                                                 <option defaultValue>Bigger/Smaller then</option>
                                                 <option>Bigger then ( >= )</option>
                                                 <option>Smaller then ( >= )</option>
                                             </select>
-                                            <input className="form-control" placeholder="Search by rating"></input>
+                                            <input className="form-control" placeholder="Search by rating"
+                                                onChange={ratingSearchChange}></input>
                                         </div>
                                     </div>
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                            <select id="inputState" className="form-control" >
+                                            <select id="inputState" className="form-control" onChange={setGenere} >
                                                 <option defaultValue>Pick Genere</option>
                                                 <option>Action</option>
                                                 <option>Adventure</option>
@@ -49,21 +79,23 @@ const SearchBar = () => {
                                     </div>
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                            <input className="form-control" placeholder="Search By Year"></input>
+                                            <input className="form-control" placeholder="Search By Year"
+                                                onChange={yearSearchChange}></input>
                                         </div>
                                     </div>
                                     <div className="col-md-2">
                                         <div className="form-group ">
-                                            <select id="inputState" className="form-control" >
+                                            <select id="inputState" className="form-control" onChange={setNoOfRatersFilter} >
                                                 <option defaultValue>Bigger/Smaller</option>
                                                 <option>Greater then ( >= )</option>
                                                 <option>Smaller then ( >= )</option>
                                             </select>
-                                            <input className="form-control" placeholder="How many raters?"></input>
+                                            <input className="form-control" placeholder="How many raters?"
+                                                onChange={noOfRatersSearchChange}></input>
                                         </div>
                                     </div>
                                     <div className="col-md-2">
-                                        <button type="button" className="btn btn-dark">SEARCH</button>
+                                        <button type="button" className="btn btn-dark" onClick={sendSearch}>SEARCH</button>
                                     </div>
                                 </div>
                             </div>
