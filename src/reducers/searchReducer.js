@@ -1,7 +1,7 @@
 
-const search = (searchParams) => {
-    return { ...searchParams }
-}
+// const search = (searchParams) => {
+//     return { ...searchParams }
+// }
 
 const initialState = {
     name: undefined,
@@ -18,8 +18,9 @@ const searchReducer = (state, action) => {
     switch (action.type) {
         case 'SET_STARTING_STATE':
             return [initialState]
-        case 'SEARCH':
-            return search(action.searchParams)
+        case 'SEARCH_RESULT_UPDATE':
+            console.log("ZZZZZZZZZZZZZZZZZ",action)// search(action.searchParams)
+            return action.searchResult
         default:
             return state
     }
@@ -37,4 +38,4 @@ const searchReducer = (state, action) => {
     // }
 }
 
-export { searchReducer,initialState}
+export { searchReducer, initialState }

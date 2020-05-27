@@ -25,7 +25,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <searchContext.Provider value={{ search }}>
+            <searchContext.Provider value={{ search,dispatch }}>
                 {/* <h1>Welcome to MMDB!!!</h1> */}
                 <NavigationBar />
                 <SearchBar />

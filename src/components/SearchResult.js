@@ -5,7 +5,7 @@ import searchResultContext from '../context/searchResultContext'
 const SearchResult = () => {
 
     const searchResult = useContext(searchResultContext)
-    console.log(searchResult.search)
+    console.log(searchResult)
 
     const renderTable = () => {
         let index = 0
@@ -16,7 +16,7 @@ const SearchResult = () => {
                     <td>{movieData.id}</td>
                     <td>{movieData.name}</td>
                     <td>{movieData.genere}</td>
-                    <td>{movieData.year}</td>
+                    <td>{movieData.startYear}</td>
                     <td>{movieData.rating}</td>
                     <td>{movieData.noOfRaters}</td>
                 </tr>

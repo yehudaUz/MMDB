@@ -5,6 +5,9 @@ import React from 'react'//, { useEffect, useState, useReducer, useContext } fro
 // import '../reducers/searchReducer'
 // import searchResultContext from '../context/searchResultContext'
 import { database } from '../database/fireBase/fireBase'
+import searchResultContext from '../context/searchResultContext'
+import { useContext } from 'react'
+
 
 const searchParams = {
     name: undefined,
@@ -24,25 +27,57 @@ const ratingSearchChange = (e) => { searchParams.rating = e.target.value }
 const yearSearchChange = (e) => { searchParams.year = e.target.value }
 const noOfRatersSearchChange = (e) => { searchParams.noOfRaters = e.target.value }
 
-const sendSearch = () => {
-    console.log(searchParams)
-    // const { } = searchParams
-    // const ref = database.ref("MMDB");
-    // console.log(ref)
-    // ref.orderByChild("name").equalTo("Ameeree").on("child_added", function (snapshot) {
-    //     console.log(snapshot.val());
-    // });
-    // ref.orderByChild("name").once("value").then(function (snapshot) {
-    database.ref("/").orderByChild('name').equalTo("Ameeree").on("value", function (snapshot) {
-        if (!snapshot.exists()) {
-            console.log("NOPE!");
+const getSearchResultFromDatabase = () => {
+    return new Promise((resolve, reject) => {
+        // const { } = searchParams
+        // const ref = database.ref("MMDB");
+        // console.log(ref)
+        // ref.orderByChild("name").equalTo("Ameeree").on("child_added", function (snapshot) {
+        //     console.log(snapshot.val());
+        // });
+        // ref.orderByChild("name").once("value").then(function (snapshot) {
+        //searchParams....
+        console.log(searchParams)
+        //&& searchParams.noOfRatersFilter === undefined &&  searchParams.ratingFilter === undefined
+        if (searchParams.name === undefined && searchParams.year === undefined && searchParams.genere === undefined)
+            resolve([]);
+
+        const search = (snapshot) => {
+            let searchResult = []
+            if (!snapshot.exists()) {
+                console.log("NOPE!");
+            }
+            else {
+                snapshot.forEach(function (searchMatch) {
+                    searchResult.push(searchMatch.val())
+                    //filterResult(searchResult)
+                 //   if ()
+                });
+            }
+            resolve(searchResult)
         }
-        else {
-            snapshot.forEach(function (param) {
-                console.log(param.key + ": " + param.val());
-            });
-        }
+
+        if (searchParams.name !== undefined)
+            database.ref("/").orderByChild('name').startAt(searchParams.name.charAt(0).toUpperCase() + searchParams.name.slice(1)).limitToFirst(100).on("value", function (snapshot) {
+                search(snapshot)
+            })
+        else if (searchParams.genere !== undefined)
+            database.ref("/").orderByChild('genere').startAt(searchParams.genere).limitToFirst(100).on("value", function (snapshot) {
+                search(snapshot)
+            })
+        else if (searchParams.year !== undefined)   // endWith \u{f8ff}
+            database.ref("/").orderByChild('startYear').equalTo(searchParams.year).limitToFirst(100).on("value", function (snapshot) {
+                search(snapshot)
+            })
     })
+    // console.log(searchResult)
+    // console.log(searchParams)
+    // const searchResult = useContext(searchResultContext)
+    // return (
+
+    //     <>
+    //     </>
+    // )
     // database.ref('991').once('value').then(function (snapshot) {
     //     if (!snapshot.exists()) {
     //         console.log("NOPE!");
@@ -61,6 +96,10 @@ const SearchBar = () => {
     // console.log(searchResultContext)
     // const searchResult = useContext(searchResultContext)
     // console.log("ZZZZ",searchResult.search)
+    const searchResult = useContext(searchResultContext)
+    const dispatch = searchResult.dispatch
+    console.log("X", searchResult)
+    // dispatch({ type: 'SEARCH' })
 
     return (
         <section className="search-banner text-white py-5 searchBar" id="search-banner">
@@ -126,7 +165,14 @@ const SearchBar = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-2">
-                                        <button type="button" className="btn btn-dark" onClick={sendSearch}>SEARCH</button>
+                                        <button type="button" className="btn btn-dark" onClick={
+                                            () => {
+                                                // const searchResult = getSearchResultFromDatabase(searchParams)
+                                                getSearchResultFromDatabase(searchParams).then((searchResult) => {
+                                                    dispatch({ type: 'SEARCH_RESULT_UPDATE', searchResult })
+                                                })
+                                            }
+                                        }>SEARCH</button>
                                     </div>
                                 </div>
                             </div>
