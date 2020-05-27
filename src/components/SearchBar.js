@@ -2,8 +2,9 @@ import React from 'react'//, { useEffect, useState, useReducer, useContext } fro
 // import notesReducer from '../reducers/notes'
 // import userLoginContext from '../context/userLoginContext'
 // import searchResultContext from '../context/searchResultContext'
-import '../reducers/searchReducer'
+// import '../reducers/searchReducer'
 // import searchResultContext from '../context/searchResultContext'
+import { database } from '../database/fireBase/fireBase'
 
 const searchParams = {
     name: undefined,
@@ -18,11 +19,41 @@ const searchParams = {
 const setNoOfRatersFilter = (e) => { searchParams.noOfRatersFilter = e.target.value };
 const setGenere = (e) => { searchParams.genere = e.target.value };
 const setRatingfilter = (e) => { searchParams.ratingFilter = e.target.value };
-const sendSearch = () => { console.log(searchParams) }
 const nameSearchChange = (e) => { searchParams.name = e.target.value }
 const ratingSearchChange = (e) => { searchParams.rating = e.target.value }
 const yearSearchChange = (e) => { searchParams.year = e.target.value }
 const noOfRatersSearchChange = (e) => { searchParams.noOfRaters = e.target.value }
+
+const sendSearch = () => {
+    console.log(searchParams)
+    // const { } = searchParams
+    // const ref = database.ref("MMDB");
+    // console.log(ref)
+    // ref.orderByChild("name").equalTo("Ameeree").on("child_added", function (snapshot) {
+    //     console.log(snapshot.val());
+    // });
+    // ref.orderByChild("name").once("value").then(function (snapshot) {
+    database.ref("/").orderByChild('name').equalTo("Ameeree").on("value", function (snapshot) {
+        if (!snapshot.exists()) {
+            console.log("NOPE!");
+        }
+        else {
+            snapshot.forEach(function (param) {
+                console.log(param.key + ": " + param.val());
+            });
+        }
+    })
+    // database.ref('991').once('value').then(function (snapshot) {
+    //     if (!snapshot.exists()) {
+    //         console.log("NOPE!");
+    //     }
+    //     else {
+    //         snapshot.forEach(function (param) {
+    //             console.log(param.key + ": " + param.val());
+    //         });
+    //     }
+    // });
+}
 
 
 
