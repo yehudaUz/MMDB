@@ -9,8 +9,7 @@ import searchContext from '../context/searchResultContext'
 // // import { firebase } from '../database/fireBase/fireBase'
 // import  searchResultsState  from '../actions/searchAction'
 // import userLoginContext from '../context/userLoginContext'
-// import { startLogin } from '../database/fireBase/auth'
-// startLogin()
+
 
 const App = () => {
     // const [searchResultsState, setSearchState] = useState([])
@@ -19,13 +18,18 @@ const App = () => {
         dispatch({ type: 'SET_STARTING_STATE', search })
     }, [])
 
+    const [user, dispatchUser] = useState({ name: "anonymous" })
+    // useEffect(() => {
+    //     dispatch({ type: 'SET_STARTING_STATE', search })
+    // }, [])
+
     // useEffect(() => {
     //     localStorage.setItem('notes', JSON.stringify(notes))
     // }, [search])
 
     return (
         <BrowserRouter>
-            <searchContext.Provider value={{ search,dispatch }}>
+            <searchContext.Provider value={{ search, dispatch, user, dispatchUser }}>
                 {/* <h1>Welcome to MMDB!!!</h1> */}
                 <NavigationBar />
                 <SearchBar />

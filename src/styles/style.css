@@ -23,3 +23,20 @@
     border-style: solid;
     border-width: 1px;
 } */
+
+.about {
+    background-color: #95b4c9;
+    padding: 20px;
+    margin: 20px;
+    font-size: x-large;
+}
+
+.about h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.dqbMYY {
+    left: 150px;
+    display: none;
+}

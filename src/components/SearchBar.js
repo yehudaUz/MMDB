@@ -7,7 +7,8 @@ import React from 'react'//, { useEffect, useState, useReducer, useContext } fro
 import { database } from '../database/fireBase/fireBase'
 import searchResultContext from '../context/searchResultContext'
 import { useContext } from 'react'
-
+import { LoopCircleLoading } from 'react-loadingg';
+import '../styles/style.css'
 
 const searchParams = {
     name: undefined,
@@ -38,6 +39,7 @@ const getSearchResultFromDatabase = () => {
         // ref.orderByChild("name").once("value").then(function (snapshot) {
         //searchParams....
         console.log(searchParams)
+        document.getElementsByClassName("dqbMYY")[0].style.display = "unset"
         //&& searchParams.noOfRatersFilter === undefined &&  searchParams.ratingFilter === undefined
         if (searchParams.name === undefined && searchParams.year === undefined && searchParams.genere === undefined)
             resolve([]);
@@ -77,20 +79,21 @@ const getSearchResultFromDatabase = () => {
 
                 });
             }
+            document.getElementsByClassName("dqbMYY")[0].style.display = "none";
             resolve(searchResult)
         }
 
         if (searchParams.name !== undefined)
             database.ref("/").orderByChild('name').startAt(searchParams.name.charAt(0).toUpperCase() + searchParams.name.slice(1)).
-                limitToFirst(1000).on("value", function (snapshot) {
+                limitToFirst(250).on("value", function (snapshot) {
                     search(snapshot)
                 })
         else if (searchParams.genere !== undefined)
-            database.ref("/").orderByChild('genere').startAt(searchParams.genere).limitToFirst(1000).on("value", function (snapshot) {
+            database.ref("/").orderByChild('genere').startAt(searchParams.genere).limitToFirst(250).on("value", function (snapshot) {
                 search(snapshot)
             })
         else if (searchParams.year !== undefined)   // endWith \u{f8ff}
-            database.ref("/").orderByChild('startYear').equalTo(searchParams.year).limitToFirst(1000).on("value", function (snapshot) {
+            database.ref("/").orderByChild('startYear').equalTo(searchParams.year).limitToFirst(250).on("value", function (snapshot) {
                 search(snapshot)
             })
     })
@@ -197,6 +200,7 @@ const SearchBar = () => {
                                                 })
                                             }
                                         }>SEARCH</button>
+                                        <LoopCircleLoading style={{ Left: 50 + 'px', bottom: 0 + 'px' }} />
                                     </div>
                                 </div>
                             </div>
