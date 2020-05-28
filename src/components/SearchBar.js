@@ -19,13 +19,13 @@ const searchParams = {
     noOfRaters: undefined
 }
 
-const setNoOfRatersFilter = (e) => { searchParams.noOfRatersFilter = e.target.value };
-const setGenere = (e) => { searchParams.genere = e.target.value };
-const setRatingfilter = (e) => { searchParams.ratingFilter = e.target.value };
-const nameSearchChange = (e) => { searchParams.name = e.target.value }
-const ratingSearchChange = (e) => { searchParams.rating = e.target.value }
-const yearSearchChange = (e) => { searchParams.year = e.target.value }
-const noOfRatersSearchChange = (e) => { searchParams.noOfRaters = e.target.value }
+const setNoOfRatersFilter = (e) => { e.target.value === "Bigger/Smaller" ? searchParams.noOfRatersFilter = undefined : searchParams.noOfRatersFilter = e.target.value };
+const setGenere = (e) => { e.target.value === "Pick Genere" ? searchParams.genere = undefined : searchParams.genere = e.target.value };
+const setRatingfilter = (e) => { e.target.value === "Bigger/Smaller" ? searchParams.ratingFilter = undefined : searchParams.ratingFilter = e.target.value };
+const nameSearchChange = (e) => { e.target.value === "" ? searchParams.name = undefined : searchParams.name = e.target.value }
+const ratingSearchChange = (e) => { e.target.value === "" ? searchParams.rating = undefined : searchParams.rating = e.target.value }
+const yearSearchChange = (e) => { e.target.value === "" ? searchParams.year = undefined : searchParams.year = e.target.value }
+const noOfRatersSearchChange = (e) => { e.target.value === "" ? searchParams.noOfRaters = undefined : searchParams.noOfRaters = e.target.value }
 
 const getSearchResultFromDatabase = () => {
     return new Promise((resolve, reject) => {
@@ -50,23 +50,47 @@ const getSearchResultFromDatabase = () => {
             else {
                 snapshot.forEach(function (searchMatch) {
                     searchResult.push(searchMatch.val())
-                    //filterResult(searchResult)
-                 //   if ()
+                    //check that name/year/genere match
+                    if (searchResult[searchResult.length - 1].name !== undefined && !searchResult[searchResult.length - 1].name.includes(((searchParams.name.charAt(0).toUpperCase() + searchParams.name.slice(1)))) ||
+                        (searchParams.year !== undefined && searchParams.year !== searchResult[searchResult.length - 1].startYear) ||
+                        (searchParams.genere !== undefined && !searchResult[searchResult.length - 1].genere.includes(searchParams.genere)))
+                        searchResult.pop()
+                    //check the bigger/smaller noOfRaters/rating is match
+                    //                         genere: undefined
+                    // name: undefined
+                    // noOfRaters: undefined
+                    // noOfRatersFilter: undefined
+                    // rating: undefined
+                    // ratingFilter: undefined
+                    else if ((searchParams.rating !== undefined && searchParams.ratingFilter === "Bigger" &&
+                        searchResult[searchResult.length - 1].rating !== undefined && searchResult[searchResult.length - 1].rating < searchParams.rating))
+                        searchResult.pop()
+                    else if ((searchParams.rating !== undefined && searchParams.ratingFilter === "Smaller" &&
+                        searchResult[searchResult.length - 1].rating !== undefined && searchResult[searchResult.length - 1].rating > searchParams.rating))
+                        searchResult.pop()
+                    else if ((searchParams.noOfRaters !== undefined && searchParams.noOfRatersFilter === "Bigger" &&
+                        searchResult[searchResult.length - 1].noOfRaters !== undefined && Number(searchResult[searchResult.length - 1].noOfRaters) < Number(searchParams.noOfRaters)))
+                        searchResult.pop()
+                    else if ((searchParams.noOfRaters !== undefined && searchParams.noOfRatersFilter === "Smaller" &&
+                        searchResult[searchResult.length - 1].noOfRaters !== undefined && Number(searchResult[searchResult.length - 1].noOfRaters) > Number(searchParams.noOfRaters)))
+                        searchResult.pop()
+
                 });
             }
             resolve(searchResult)
         }
 
         if (searchParams.name !== undefined)
-            database.ref("/").orderByChild('name').startAt(searchParams.name.charAt(0).toUpperCase() + searchParams.name.slice(1)).limitToFirst(100).on("value", function (snapshot) {
-                search(snapshot)
-            })
+            database.ref("/").orderByChild('name').startAt(searchParams.name.charAt(0).toUpperCase() + searchParams.name.slice(1)).
+                limitToFirst(1000).on("value", function (snapshot) {
+                    search(snapshot)
+                })
         else if (searchParams.genere !== undefined)
-            database.ref("/").orderByChild('genere').startAt(searchParams.genere).limitToFirst(100).on("value", function (snapshot) {
+            database.ref("/").orderByChild('genere').startAt(searchParams.genere).limitToFirst(1000).on("value", function (snapshot) {
                 search(snapshot)
             })
         else if (searchParams.year !== undefined)   // endWith \u{f8ff}
-            database.ref("/").orderByChild('startYear').equalTo(searchParams.year).limitToFirst(100).on("value", function (snapshot) {
+            database.ref("/").orderByChild('startYear').equalTo(searchParams.year).limitToFirst(1000).on("value", function (snapshot) {
                 search(snapshot)
             })
     })
@@ -123,9 +147,9 @@ const SearchBar = () => {
                                     <div className="col-md-2">
                                         <div className="form-group ">
                                             <select id="inputState" className="form-control" onChange={setRatingfilter} >
-                                                <option defaultValue>Bigger/Smaller then</option>
-                                                <option>Bigger then ( >= )</option>
-                                                <option>Smaller then ( >= )</option>
+                                                <option defaultValue>Bigger/Smaller</option>
+                                                <option>Bigger</option>
+                                                <option>Smaller</option>
                                             </select>
                                             <input className="form-control" placeholder="Search by rating"
                                                 onChange={ratingSearchChange}></input>
@@ -157,8 +181,8 @@ const SearchBar = () => {
                                         <div className="form-group ">
                                             <select id="inputState" className="form-control" onChange={setNoOfRatersFilter} >
                                                 <option defaultValue>Bigger/Smaller</option>
-                                                <option>Greater then ( >= )</option>
-                                                <option>Smaller then ( >= )</option>
+                                                <option>Bigger</option>
+                                                <option>Smaller</option>
                                             </select>
                                             <input className="form-control" placeholder="How many raters?"
                                                 onChange={noOfRatersSearchChange}></input>
